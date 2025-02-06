@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="signup_form_template" name="Signup Form">
+    <t t-call="website.layout">
+        <div class="container">
+            <h1>Crear una nueva compañía</h1>
+            <form action="/signup" method="post" id="signup-form">
+                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                <div class="form-group">
+                    <label for="email">Correo electrónico:</label>
+                    <input type="email" name="email" t-att-value="email" class="form-control" required="true" />
+                    <t t-if="email_error">
+                        <div class="alert alert-danger mt-2" t-esc="email_error" />
+                    </t>
+                </div>
+                <div class="form-group">
+                    <label for="fullname">Nombre y apellidos:</label>
+                    <input type="text" name="fullname" t-att-value="fullname" class="form-control" maxlength="50" required="true" />
+                    <t t-if="fullname_error">
+                        <div class="alert alert-danger mt-2" t-esc="fullname_error" />
+                    </t>
+                </div>
+                <div class="form-group">
+                    <label for="password">Contraseña:</label>
+                    <input type="password" name="password" t-att-value="password" class="form-control" required="true" />
+                    <small class="form-text text-muted">
+                        La contraseña debe tener al menos 8 caracteres, una mayúscula, una minúscula y un número.
+                    </small>
+                    <t t-if="password_error">
+                        <div class="alert alert-danger mt-2" t-esc="password_error" />
+                    </t>
+                </div>
+                <div class="form-group">
+                    <label for="lang">Idioma:</label>
+                    <select name="lang" class="form-control" t-att-value="lang" required="true">
+                        <option value="es_ES">Español</option>
+                        <option value="en_US">Inglés</option>
+                        <!-- Agrega más idiomas si es necesario -->
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="company_name">Nombre de la compañía:</label>
+                    <input type="text" name="company_name" t-att-value="company_name" class="form-control" required="true" />
+                </div>
+                <div class="form-group">
+                    <!-- Widget de Google reCAPTCHA -->
+                    <!-- @todo get site_key from the odoo configuration ->
+                    <div class="g-recaptcha" data-sitekey="6Lfun8wqAAAAAPWRaLeEpDhoTrqfqJ813EBvgUzq"></div>
+                    <t t-if="captcha_error">
+                        <div class="alert alert-danger mt-2" t-esc="captcha_error" />
+                    </t>
+                </div>
+                <button type="submit" class="btn btn-primary">Crear compañía y usuario</button>
+            </form>
+            <t t-if="error">
+                <div class="alert alert-danger mt-3" t-esc="error" />
+            </t>
+        </div>
+                <!-- Script de Google reCAPTCHA -->
+        <script src="https://www.google.com/recaptcha/api.js" async="true" defer="true"></script>
+    </t>
+</template>
+    </data>
+</odoo>
