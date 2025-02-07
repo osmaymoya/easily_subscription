@@ -45,8 +45,7 @@
                 </div>
                 <div class="form-group">
                     <!-- Widget de Google reCAPTCHA -->
-                    <!-- @todo get site_key from the odoo configuration ->
-                    <div class="g-recaptcha" data-sitekey="6Lfun8wqAAAAAPWRaLeEpDhoTrqfqJ813EBvgUzq"></div>
+                    <div class="g-recaptcha" t-att-data-sitekey="recaptcha_public_key"></div>
                     <t t-if="captcha_error">
                         <div class="alert alert-danger mt-2" t-esc="captcha_error" />
                     </t>

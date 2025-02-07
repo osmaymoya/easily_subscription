@@ -10,7 +10,9 @@ class CustomSignupController(http.Controller):
     def signup_form(self, **post):
         # Mostrar el formulario si no se han enviado datos
         if not post:
-            return http.request.render('easily_subscription.signup_form_template', {})
+            recaptcha_public_key = http.request.env['ir.config_parameter'].sudo().get_param('recaptcha_public_key')
+            return http.request.render('easily_subscription.signup_form_template',
+                                       {'recaptcha_public_key': recaptcha_public_key})
 
         # Procesar los datos del formulario
         values = {}
@@ -131,8 +133,7 @@ class CustomSignupController(http.Controller):
 
     def _validate_recaptcha(self, recaptcha_response):
         """Validar el token de Google reCAPTCHA."""
-        # @todo get secret_key from the odoo configuration
-        secret_key = '6Lfun8wqAAAAAJsAWb-dtKykcnbuFRTSOZs6XwTn'  # Reemplaza con tu Secret Key
+        secret_key = http.request.env['ir.config_parameter'].sudo().get_param('recaptcha_private_key')
         payload = {
             'secret': secret_key,
             'response': recaptcha_response,
